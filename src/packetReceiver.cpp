@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
         memcpy(&id, &array[1], 4);
         id = ntohl(id);  // packet id appears to be big endian
 
-        printf("SYNC: 0x%02X\tID: 0x%08X\tlen: %u\n", array[0], id, array_len);
+        printf("SYNC: 0x%02X\tID: 0x%08X\tlen: %lu\n", array[0], id, array_len);
     }
 
     // Unreachable in this case, but always good to have
