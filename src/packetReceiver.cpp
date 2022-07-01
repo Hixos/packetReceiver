@@ -17,7 +17,7 @@
 static constexpr unsigned int ARRAY_SIZE = 400;
 
 uint8_t array[ARRAY_SIZE];  // Array where a single packet is stored
-size_t array_len;              // Number of bytes currently stored in array
+size_t array_len;           // Number of bytes currently stored in array
 
 /**
  * @brief Adds membership to the provided multicast group
@@ -65,10 +65,14 @@ int main(int argc, char* argv[])
 
         // Debug prints to confirm we received the correct messages. A printf
         // would be really bad in a real-time embedded system where printing to
-        // a serial interface would take a really long time
+        // a serial interface would take a really long time. Ideally, we could
+        // have a consumer and a receiver thread to decouple the network code
+        // with the one that uses the messages, making the two communicate via a
+        // synchronized queue or circular buffer.
         uint32_t id;
         memcpy(&id, &array[1], 4);
-        id = ntohl(id);  // packet id appears to be big endian
+        id = ntohl(id);  // Packet id appears to be big endian, so convert it to
+                         // the proper host representation
 
         printf("SYNC: 0x%02X\tID: 0x%08X\tlen: %lu\n", array[0], id, array_len);
     }
