@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
         // with the one that uses the messages, making the two communicate via a
         // synchronized queue or circular buffer.
         uint32_t id;
-        memcpy(&id, &array[1], 4);
+        memcpy(&id, &array[1], sizeof(uint32_t));
         id = ntohl(id);  // Packet id appears to be big endian, so convert it to
                          // the proper host representation
 
