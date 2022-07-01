@@ -17,7 +17,7 @@
 static constexpr unsigned int ARRAY_SIZE = 400;
 
 uint8_t array[ARRAY_SIZE];  // Array where a single packet is stored
-size_t array_len;           // Number of bytes currently stored in array
+ssize_t array_len;           // Number of bytes currently stored in array
 
 /**
  * @brief Adds membership to the provided multicast group
@@ -60,6 +60,12 @@ int main(int argc, char* argv[])
         // single datagram at higher level)
         array_len =
             recvfrom(sockfd, array, ARRAY_SIZE, 0, &sender, &sender_addrlen);
+        
+        if(array_len < 0)
+        {
+            fprintf(stderr, "Error calling recvfrom. Exiting.\n");
+            return 1;
+        }
         // Of course, receiving a new packet means that the previous one is
         // ovewritten.
 
